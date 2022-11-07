@@ -45,9 +45,14 @@
             this._playlistStaticLabel = new System.Windows.Forms.Label();
             this._totalTimeLabel = new System.Windows.Forms.Label();
             this._currentTimeLabel = new System.Windows.Forms.Label();
-            this._playlistBox = new AudioPlayer.Forms.ListBoxColored();
+            this._playlistBox = new AudioPlayer.Forms.ListBoxExtended();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this._playlistNameTextBox = new System.Windows.Forms.TextBox();
+            this._savePlaylistButton = new System.Windows.Forms.Button();
+            this._loadPlaylistMenu = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._volumeSlider)).BeginInit();
             this._currentTrackGroup.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _playButton
@@ -82,7 +87,7 @@
             this._moveUpButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this._moveUpButton.FlatAppearance.BorderSize = 0;
             this._moveUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this._moveUpButton.Location = new System.Drawing.Point(7, 32);
+            this._moveUpButton.Location = new System.Drawing.Point(7, 51);
             this._moveUpButton.Name = "_moveUpButton";
             this._moveUpButton.Size = new System.Drawing.Size(30, 30);
             this._moveUpButton.TabIndex = 7;
@@ -101,6 +106,7 @@
             this._removeButton.Size = new System.Drawing.Size(30, 30);
             this._removeButton.TabIndex = 8;
             this._removeButton.UseVisualStyleBackColor = false;
+            this._removeButton.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // _moveDownButton
             // 
@@ -109,7 +115,7 @@
             this._moveDownButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this._moveDownButton.FlatAppearance.BorderSize = 0;
             this._moveDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this._moveDownButton.Location = new System.Drawing.Point(7, 68);
+            this._moveDownButton.Location = new System.Drawing.Point(7, 87);
             this._moveDownButton.Name = "_moveDownButton";
             this._moveDownButton.Size = new System.Drawing.Size(30, 30);
             this._moveDownButton.TabIndex = 9;
@@ -141,6 +147,7 @@
             this._playbackProgress.Size = new System.Drawing.Size(180, 10);
             this._playbackProgress.TabIndex = 11;
             this._playbackProgress.Value = 50;
+            this._playbackProgress.Click += new System.EventHandler(this.PlaybackProgress_Click);
             // 
             // _volumeButton
             // 
@@ -154,6 +161,7 @@
             this._volumeButton.Size = new System.Drawing.Size(30, 30);
             this._volumeButton.TabIndex = 12;
             this._volumeButton.UseVisualStyleBackColor = false;
+            this._volumeButton.Click += new System.EventHandler(this.VolumeButton_Click);
             // 
             // _currentTrackGroup
             // 
@@ -205,7 +213,7 @@
             // _playlistStaticLabel
             // 
             this._playlistStaticLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this._playlistStaticLabel.Location = new System.Drawing.Point(40, 2);
+            this._playlistStaticLabel.Location = new System.Drawing.Point(40, 24);
             this._playlistStaticLabel.Name = "_playlistStaticLabel";
             this._playlistStaticLabel.Size = new System.Drawing.Size(61, 27);
             this._playlistStaticLabel.TabIndex = 1;
@@ -242,17 +250,55 @@
             "ddd",
             "fff",
             "ggg"});
-            this._playlistBox.Location = new System.Drawing.Point(40, 32);
+            this._playlistBox.Location = new System.Drawing.Point(40, 53);
             this._playlistBox.Name = "_playlistBox";
-            this._playlistBox.Size = new System.Drawing.Size(485, 382);
+            this._playlistBox.Size = new System.Drawing.Size(485, 361);
             this._playlistBox.TabIndex = 18;
             this._playlistBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PlaylistBox_MouseDoubleClick);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._loadPlaylistMenu});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(534, 24);
+            this.menuStrip1.TabIndex = 19;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // _playlistNameTextBox
+            // 
+            this._playlistNameTextBox.Location = new System.Drawing.Point(107, 28);
+            this._playlistNameTextBox.Name = "_playlistNameTextBox";
+            this._playlistNameTextBox.PlaceholderText = "Enter playlist name...";
+            this._playlistNameTextBox.Size = new System.Drawing.Size(317, 23);
+            this._playlistNameTextBox.TabIndex = 20;
+            this._playlistNameTextBox.TextChanged += new System.EventHandler(this.PlaylistNameTextBox_TextChanged);
+            // 
+            // _savePlaylistButton
+            // 
+            this._savePlaylistButton.Location = new System.Drawing.Point(430, 27);
+            this._savePlaylistButton.Name = "_savePlaylistButton";
+            this._savePlaylistButton.Size = new System.Drawing.Size(92, 24);
+            this._savePlaylistButton.TabIndex = 21;
+            this._savePlaylistButton.Text = "Save playlist";
+            this._savePlaylistButton.UseVisualStyleBackColor = true;
+            this._savePlaylistButton.Click += new System.EventHandler(this.SavePlaylistButton_Click);
+            // 
+            // _loadPlaylistMenu
+            // 
+            this._loadPlaylistMenu.Name = "_loadPlaylistMenu";
+            this._loadPlaylistMenu.Size = new System.Drawing.Size(45, 20);
+            this._loadPlaylistMenu.Text = "Load";
+            this._loadPlaylistMenu.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.LoadPlaylistMenu_DropDownItemClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 502);
+            this.Controls.Add(this._savePlaylistButton);
+            this.Controls.Add(this._playlistNameTextBox);
             this.Controls.Add(this._playlistBox);
             this.Controls.Add(this._currentTimeLabel);
             this.Controls.Add(this._totalTimeLabel);
@@ -268,12 +314,18 @@
             this.Controls.Add(this._moveUpButton);
             this.Controls.Add(this._volumeSlider);
             this.Controls.Add(this._playButton);
+            this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Audio Player";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this._volumeSlider)).EndInit();
             this._currentTrackGroup.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,6 +349,10 @@
         private Label _playlistStaticLabel;
         private Label _totalTimeLabel;
         private Label _currentTimeLabel;
-        private Forms.ListBoxColored _playlistBox;
+        private Forms.ListBoxExtended _playlistBox;
+        private MenuStrip menuStrip1;
+        private TextBox _playlistNameTextBox;
+        private Button _savePlaylistButton;
+        private ToolStripMenuItem _loadPlaylistMenu;
     }
 }

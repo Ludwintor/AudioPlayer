@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Newtonsoft.Json;
 
 namespace Collections
 {
@@ -62,12 +63,30 @@ namespace Collections
             return result;
         }
 
+        public void AppendBefore(LinkedListItem<T> node, LinkedListItem<T> newNode)
+        {
+            ValidateNode(node);
+            ValidateNewNode(newNode);
+            newNode.List = this;
+            InsertNodeBefore(node, newNode);
+            if (node == _head)
+                _head = newNode;
+        }
+
         public LinkedListItem<T> AppendAfter(LinkedListItem<T> node, T item)
         {
             ValidateNode(node);
-            LinkedListItem<T> result = new(item);
+            LinkedListItem<T> result = new(this, item);
             InsertNodeBefore(node.Next!, result);
             return result;
+        }
+
+        public void AppendAfter(LinkedListItem<T> node, LinkedListItem<T> newNode)
+        {
+            ValidateNode(node);
+            ValidateNewNode(newNode);
+            newNode.List = this;
+            InsertNodeBefore(node.Next!, newNode);
         }
 
         public LinkedListItem<T>? Find(T item)
@@ -97,6 +116,21 @@ namespace Collections
             }
             node.Reset();
             _count--;
+        }
+
+        public void Clear()
+        {
+            if (_head == null)
+                return;
+            LinkedListItem<T> current = _head;
+            while (current.Next != null)
+            {
+                LinkedListItem<T> temp = current;
+                current = current.Next;
+                temp.Reset();
+            }
+            _head = null;
+            _count = 0;
         }
 
         public bool Contains(T item)
@@ -167,6 +201,14 @@ namespace Collections
                 throw new ArgumentNullException(nameof(node));
             if (node.List != this)
                 throw new InvalidOperationException("This node from another list");
+        }
+
+        protected void ValidateNewNode(LinkedListItem<T> newNode)
+        {
+            if (newNode == null)
+                throw new ArgumentNullException(nameof(newNode));
+            if (newNode.List != null)
+                throw new InvalidOperationException("This node already contained in another list");
         }
 
         private void InsertNodeEmptyList(LinkedListItem<T> newNode)

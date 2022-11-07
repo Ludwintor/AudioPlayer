@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioPlayer", "AudioPlayer\AudioPlayer.csproj", "{03F19B4A-CAF7-494A-A8A5-25635094FA0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections", "Collections\Collections.csproj", "{0BF16374-A3D3-41C7-B3DF-EFD9E88EFBBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collections", "Collections\Collections.csproj", "{0BF16374-A3D3-41C7-B3DF-EFD9E88EFBBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collections.Tests", "Collections.Tests\Collections.Tests.csproj", "{C0302624-BDBA-4283-84CA-B30D69B67B7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0BF16374-A3D3-41C7-B3DF-EFD9E88EFBBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BF16374-A3D3-41C7-B3DF-EFD9E88EFBBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BF16374-A3D3-41C7-B3DF-EFD9E88EFBBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0302624-BDBA-4283-84CA-B30D69B67B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0302624-BDBA-4283-84CA-B30D69B67B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0302624-BDBA-4283-84CA-B30D69B67B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0302624-BDBA-4283-84CA-B30D69B67B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
