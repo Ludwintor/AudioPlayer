@@ -17,6 +17,7 @@ namespace AudioPlayer
         private readonly Bitmap _pauseButtonImage;
         private readonly Bitmap _volumeButtonImage;
         private readonly Bitmap _muteButtonImage;
+        private readonly Dictionary<int, Composition[]> _playlists = new();
 
         public Form1()
         {
@@ -35,6 +36,7 @@ namespace AudioPlayer
             _volumeButtonImage = Resources.volume;
             _muteButtonImage = Resources.volume_mute;
             _playlist.Volume = DEFAULT_VOLUME;
+            _playlistNameTextBox.Text = _playlistTabs.SelectedTab.Text;
             _playlist.TrackEnded += Playlist_TrackEnded;
         }
 
@@ -265,11 +267,18 @@ namespace AudioPlayer
             ResumePlayback();
         }
 
+        private void AddPlaylistMenu_Click(object sender, EventArgs e)
+        {
+            _playlistTabs.TabPages.Add($"New {_playlistTabs.TabPages.Count + 1}");
+        }
+
         private void SavePlaylistButton_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(PLAYLIST_SAVE_DIR))
                 Directory.CreateDirectory(PLAYLIST_SAVE_DIR);
             string name = _playlistNameTextBox.Text;
+            if (string.IsNullOrEmpty(name))
+                return;
             if (!_loadPlaylistMenu.DropDownItems.ContainsKey(name))
             {
                 ToolStripItem item = _loadPlaylistMenu.DropDownItems.Add(name);
@@ -319,6 +328,7 @@ namespace AudioPlayer
             char[] invalidChars = Path.GetInvalidFileNameChars();
             _playlistNameTextBox.Text = string.Join("", _playlistNameTextBox.Text.Split(invalidChars));
             _playlistNameTextBox.SelectionStart = _playlistNameTextBox.Text.Length + 1;
+            _playlistTabs.SelectedTab.Text = _playlistNameTextBox.Text;
         }
 
         #endregion
@@ -344,6 +354,34 @@ namespace AudioPlayer
         private void HandleTrackInvalid(FileInvalidException e)
         {
             MessageBox.Show($"File at path {e.FileName} is corrupted or wrong format");
+        }
+
+        private void PlaylistTabs_Selected(object sender, TabControlEventArgs e)
+        {
+            e.TabPage!.Controls.Add(_playlistBox);
+            RepopulatePlaylist(_playlists.GetValueOrDefault(e.TabPageIndex));
+            _playlistNameTextBox.Text = e.TabPage.Text;
+        }
+
+        private void RepopulatePlaylist(Composition[]? tracks)
+        {
+            if (_playlist.Current != null)
+                StopPlayback();
+            _playlist.Clear();
+            _playlistBox.Items.Clear();
+            if (tracks == null)
+                return;
+            foreach (Composition track in tracks)
+            {
+                _playlist.Add(track);
+                _playlistBox.Items.Add(track.Name);
+            }
+        }
+
+        private void PlaylistTabs_Deselected(object sender, TabControlEventArgs e)
+        {
+            int index = e.TabPageIndex;
+            _playlists[index] = _playlist.ToArray();
         }
     }
 }

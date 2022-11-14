@@ -46,13 +46,19 @@
             this._totalTimeLabel = new System.Windows.Forms.Label();
             this._currentTimeLabel = new System.Windows.Forms.Label();
             this._playlistBox = new AudioPlayer.Forms.ListBoxExtended();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this._menuStrip = new System.Windows.Forms.MenuStrip();
+            this._playlistMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this._addPlaylistMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this._loadPlaylistMenu = new System.Windows.Forms.ToolStripMenuItem();
             this._playlistNameTextBox = new System.Windows.Forms.TextBox();
             this._savePlaylistButton = new System.Windows.Forms.Button();
-            this._loadPlaylistMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this._playlistTabs = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this._volumeSlider)).BeginInit();
             this._currentTrackGroup.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this._menuStrip.SuspendLayout();
+            this._playlistTabs.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _playButton
@@ -250,21 +256,44 @@
             "ddd",
             "fff",
             "ggg"});
-            this._playlistBox.Location = new System.Drawing.Point(40, 53);
+            this._playlistBox.Location = new System.Drawing.Point(-4, -3);
             this._playlistBox.Name = "_playlistBox";
-            this._playlistBox.Size = new System.Drawing.Size(485, 361);
+            this._playlistBox.Size = new System.Drawing.Size(482, 340);
             this._playlistBox.TabIndex = 18;
             this._playlistBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PlaylistBox_MouseDoubleClick);
             // 
-            // menuStrip1
+            // _menuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._playlistMenu});
+            this._menuStrip.Location = new System.Drawing.Point(0, 0);
+            this._menuStrip.Name = "_menuStrip";
+            this._menuStrip.Size = new System.Drawing.Size(534, 24);
+            this._menuStrip.TabIndex = 19;
+            this._menuStrip.Text = "menuStrip1";
+            // 
+            // _playlistMenu
+            // 
+            this._playlistMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._addPlaylistMenu,
             this._loadPlaylistMenu});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(534, 24);
-            this.menuStrip1.TabIndex = 19;
-            this.menuStrip1.Text = "menuStrip1";
+            this._playlistMenu.Name = "_playlistMenu";
+            this._playlistMenu.Size = new System.Drawing.Size(56, 20);
+            this._playlistMenu.Text = "Playlist";
+            // 
+            // _addPlaylistMenu
+            // 
+            this._addPlaylistMenu.Name = "_addPlaylistMenu";
+            this._addPlaylistMenu.Size = new System.Drawing.Size(100, 22);
+            this._addPlaylistMenu.Text = "New";
+            this._addPlaylistMenu.Click += new System.EventHandler(this.AddPlaylistMenu_Click);
+            // 
+            // _loadPlaylistMenu
+            // 
+            this._loadPlaylistMenu.Name = "_loadPlaylistMenu";
+            this._loadPlaylistMenu.Size = new System.Drawing.Size(100, 22);
+            this._loadPlaylistMenu.Text = "Load";
+            this._loadPlaylistMenu.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.LoadPlaylistMenu_DropDownItemClicked);
             // 
             // _playlistNameTextBox
             // 
@@ -285,21 +314,36 @@
             this._savePlaylistButton.UseVisualStyleBackColor = true;
             this._savePlaylistButton.Click += new System.EventHandler(this.SavePlaylistButton_Click);
             // 
-            // _loadPlaylistMenu
+            // _playlistTabs
             // 
-            this._loadPlaylistMenu.Name = "_loadPlaylistMenu";
-            this._loadPlaylistMenu.Size = new System.Drawing.Size(45, 20);
-            this._loadPlaylistMenu.Text = "Load";
-            this._loadPlaylistMenu.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.LoadPlaylistMenu_DropDownItemClicked);
+            this._playlistTabs.Controls.Add(this.tabPage1);
+            this._playlistTabs.Location = new System.Drawing.Point(40, 51);
+            this._playlistTabs.Name = "_playlistTabs";
+            this._playlistTabs.SelectedIndex = 0;
+            this._playlistTabs.Size = new System.Drawing.Size(485, 364);
+            this._playlistTabs.TabIndex = 22;
+            this._playlistTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.PlaylistTabs_Selected);
+            this._playlistTabs.Deselected += new System.Windows.Forms.TabControlEventHandler(this.PlaylistTabs_Deselected);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this._playlistBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(477, 336);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "New 1";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 502);
+            this.Controls.Add(this._playlistTabs);
             this.Controls.Add(this._savePlaylistButton);
             this.Controls.Add(this._playlistNameTextBox);
-            this.Controls.Add(this._playlistBox);
             this.Controls.Add(this._currentTimeLabel);
             this.Controls.Add(this._totalTimeLabel);
             this.Controls.Add(this._playlistStaticLabel);
@@ -314,9 +358,9 @@
             this.Controls.Add(this._moveUpButton);
             this.Controls.Add(this._volumeSlider);
             this.Controls.Add(this._playButton);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this._menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this._menuStrip;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Audio Player";
@@ -324,8 +368,10 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this._volumeSlider)).EndInit();
             this._currentTrackGroup.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this._menuStrip.ResumeLayout(false);
+            this._menuStrip.PerformLayout();
+            this._playlistTabs.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,9 +396,13 @@
         private Label _totalTimeLabel;
         private Label _currentTimeLabel;
         private Forms.ListBoxExtended _playlistBox;
-        private MenuStrip menuStrip1;
+        private MenuStrip _menuStrip;
         private TextBox _playlistNameTextBox;
         private Button _savePlaylistButton;
+        private TabControl _playlistTabs;
+        private TabPage tabPage1;
+        private ToolStripMenuItem _playlistMenu;
+        private ToolStripMenuItem _addPlaylistMenu;
         private ToolStripMenuItem _loadPlaylistMenu;
     }
 }
